@@ -6,13 +6,13 @@
 #    By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 13:27:58 by ayarmaya          #+#    #+#              #
-#    Updated: 2024/06/06 01:11:02 by ayarmaya         ###   ########.fr        #
+#    Updated: 2024/06/06 01:18:37 by ayarmaya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 PATH_SRC	=	src/
-SRC			=	essai.c
+SRC			=	main.c
 
 SRCS		=	$(addprefix $(PATH_SRC), $(SRC))
 OBJS		=	$(SRCS:.c=.o)
