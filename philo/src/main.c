@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:15:01 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/11 18:11:50 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:23:14 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_table(&table, argc, argv))
 		return (1);
-		//code ici
+	if (create_threads(&table))
+		return (1);
 	cleanup(&table);
 	return (0);
 }

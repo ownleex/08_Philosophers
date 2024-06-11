@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:42:52 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/11 18:00:11 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:20:48 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_philosopher
 	t_fork				*right_fork;
 	long				last_meal_time;
 	int					meals_eaten;
+	t_table				*table;
 }					t_philosopher;
 
 typedef struct s_table
@@ -51,5 +52,6 @@ typedef struct s_table
 long	ft_atol(const char *str);
 int		error(char *str);
 int		init_table(t_table *table, int argc, char **argv);
+int		create_threads(t_table *table);
 
 #endif
