@@ -6,13 +6,13 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:15:01 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/10 16:55:56 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:18:19 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	is_positive_integer(const char *str)
+int	is_positive(const char *str)
 {
 	int	i;
 
@@ -36,7 +36,7 @@ int	check_arguments(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		if (!is_positive_integer(argv[i]) || ft_atol(argv[i]) <= 0)
+		if (!is_positive(argv[i]) || ft_atol(argv[i]) <= 0)
 			return (error("Err: All arguments must be positive integers.\n"));
 		i++;
 	}
