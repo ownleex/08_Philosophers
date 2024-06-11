@@ -6,11 +6,27 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:15:01 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/10 18:18:19 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:11:50 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	cleanup(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->num_of_philo)
+	{
+		pthread_mutex_destroy(&table->forks[i].mutex_fork);
+		i++;
+	}
+	free(table->forks);
+	free(table->philos);
+	pthread_mutex_destroy(&table->print_mutex);
+	pthread_mutex_destroy(&table->meal_check_mutex);
+}
 
 int	is_positive(const char *str)
 {
@@ -48,10 +64,15 @@ int	check_arguments(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
+	t_table		table;
+
 	if (argc < 5 || argc > 6)
 		return (error("Err: Wrong argument count\n"));
 	if (check_arguments(argc, argv))
 		return (1);
-	// Code principal ici
+	if (init_table(&table, argc, argv))
+		return (1);
+		//code ici
+	cleanup(&table);
 	return (0);
 }
