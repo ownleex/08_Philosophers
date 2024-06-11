@@ -6,11 +6,24 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:15:06 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/11 18:00:02 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:39:51 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long	get_current_time(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+long	get_timestamp(long start_time)
+{
+	return (get_current_time() - start_time);
+}
 
 long	ft_atol(const char *str)
 {

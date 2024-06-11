@@ -6,16 +6,17 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:15:46 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/11 18:27:50 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:36:30 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 void	print_action(t_philosopher *philo, const char *action)
 {
 	pthread_mutex_lock(&philo->table->print_mutex);
-	printf("%ld %d %s\n", get_timestamp(philo->table->start_time), philo->id, action);
+	printf("%ld %d %s\n", get_timestamp(philo->table->start_time), \
+	philo->id, action);
 	pthread_mutex_unlock(&philo->table->print_mutex);
 }
 
@@ -45,6 +46,7 @@ void	*routine(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
+	printf("Thread %d started\n", philo->id);
 	while (1)
 	{
 		eat(philo);
@@ -60,17 +62,21 @@ int	create_threads(t_table *table)
 	i = 0;
 	while (i < table->num_of_philo)
 	{
+		printf("Creating thread for philosopher %d\n", table->philos[i].id);
 		if (pthread_create(&table->philos[i].thread, NULL, routine, \
 		&table->philos[i]))
 			return (error("Err: Thread creation failed.\n"));
 		i++;
 	}
+	printf("All threads created\n");
 	i = 0;
 	while (i < table->num_of_philo)
 	{
+		printf("Joining thread for philosopher %d\n", table->philos[i].id);
 		if (pthread_join(table->philos[i].thread, NULL))
 			return (error("Err: Thread join failed.\n"));
 		i++;
 	}
+	printf("All threads joined\n");
 	return (0);
 }

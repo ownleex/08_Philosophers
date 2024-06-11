@@ -6,24 +6,39 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:35:54 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/11 18:24:55 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:36:43 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	get_current_time(void)
+int	init_philosophers(t_table *table)
 {
-	struct timeval	tv;
+	int		i;
 
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	printf("Allocating philosophers\n");
+	table->philos = malloc(sizeof(t_philosopher) * table->num_of_philo);
+	if (!table->philos)
+		return (error("Err: Memory allocation failed.\n"));
+	i = 0;
+	while (i < table->num_of_philo)
+	{
+		table->philos[i].id = i + 1;
+		table->philos[i].left_fork = &table->forks[i];
+		table->philos[i].right_fork = &table->forks[(i + 1) % \
+		table->num_of_philo];
+		table->philos[i].last_meal_time = table->start_time;
+		table->philos[i].meals_eaten = 0;
+		i++;
+	}
+	return (0);
 }
 
 int	init_forks(t_table *table)
 {
 	int	i;
 
+	printf("Allocating forks\n");
 	table->forks = malloc(sizeof(t_fork) * table->num_of_philo);
 	if (!table->forks)
 		return (error("Err: Memory allocation failed.\n"));
@@ -37,28 +52,9 @@ int	init_forks(t_table *table)
 	return (0);
 }
 
-int	init_philosophers(t_table *table)
-{
-	int		i;
-
-	table->philos = malloc(sizeof(t_philosopher) * table->num_of_philo);
-	if (!table->philos)
-		return (error("Err: Memory allocation failed.\n"));
-	i = 0;
-	while (i < table->num_of_philo)
-	{
-		table->philos[i].id = i + 1;
-		table->philos[i].left_fork = &table->forks[i];
-		table->philos[i].right_fork = &table->forks[(i + 1) % table->num_of_philo];
-		table->philos[i].last_meal_time = table->start_time;
-		table->philos[i].meals_eaten = 0;
-		i++;
-	}
-	return (0);
-}
-
 int	init_table(t_table *table, int argc, char **argv)
 {
+	printf("Initializing table\n");
 	table->num_of_philo = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]);
 	table->time_to_eat = ft_atol(argv[3]);

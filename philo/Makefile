@@ -6,7 +6,7 @@
 #    By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 13:27:58 by ayarmaya          #+#    #+#              #
-#    Updated: 2024/06/11 18:16:05 by ayarmaya         ###   ########.fr        #
+#    Updated: 2024/06/11 19:24:02 by ayarmaya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,15 @@ SRC			=	main.c \
 SRCS		=	$(addprefix $(PATH_SRC), $(SRC))
 OBJS		=	$(SRCS:.c=.o)
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -g
+LDFLAGS		=	-lpthread
 HEADERS		=	-I./include
 RM			= 	rm -f
 
 all:		$(NAME)
 
 $(NAME): 	$(OBJS)
-			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(HEADERS)
+			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(HEADERS) $(LDFLAGS)
 
 %.o: 		%.c
 			$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@

@@ -51,9 +51,12 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-test.c
-philo/philo
+
 .DS_Store
 .vscode
 settings.json
 all
+
+test.c
+philo/philo
+philo.zip
