@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:15:46 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/12 18:25:33 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:46:05 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,37 @@
 
 void	print_action(t_philosopher *philo, const char *action)
 {
-    if (philo == NULL || action == NULL || philo->table == NULL)
-	{
-        fprintf(stderr, "Error: Null pointers in print_action\n");
-        return;
-    }
 	pthread_mutex_lock(&philo->table->print_mutex);
 	printf("%ld %d %s\n", get_timestamp(philo->table->start_time), \
 	philo->id, action);
 	pthread_mutex_unlock(&philo->table->print_mutex);
 }
 
-void eat(t_philosopher *philo)
+void	eat(t_philosopher *philo)
 {
-    if (philo == NULL || philo->left_fork == NULL || philo->right_fork == NULL)
+	t_fork	*first_fork;
+	t_fork	*second_fork;
+
+	if (philo->left_fork < philo->right_fork)
 	{
-        fprintf(stderr, "Error: Null philosopher or fork pointers\n");
-        return;
-    }
-    pthread_mutex_lock(&philo->left_fork->mutex_fork);
-    print_action(philo, "has taken a fork");
-
-    pthread_mutex_lock(&philo->right_fork->mutex_fork);
-    print_action(philo, "has taken a fork");
-
-    print_action(philo, "is eating");
-    philo->last_meal_time = get_current_time();
-    usleep(philo->table->time_to_eat * 1000);
-    pthread_mutex_unlock(&philo->right_fork->mutex_fork);
-
-    pthread_mutex_unlock(&philo->left_fork->mutex_fork);
-
-    philo->meals_eaten++;
+		first_fork = philo->left_fork;
+		second_fork = philo->right_fork;
+	}
+	else
+	{
+		first_fork = philo->right_fork;
+		second_fork = philo->left_fork;
+	}
+	pthread_mutex_lock(&first_fork->mutex_fork);
+	pthread_mutex_lock(&second_fork->mutex_fork);
+	print_action(philo, "has taken a fork");
+	print_action(philo, "has taken a fork");
+	print_action(philo, "is eating");
+	philo->last_meal_time = get_current_time();
+	usleep(philo->table->time_to_eat * 1000);
+	pthread_mutex_unlock(&second_fork->mutex_fork);
+	pthread_mutex_unlock(&first_fork->mutex_fork);
+	philo->meals_eaten++;
 }
 
 void	sleep_and_think(t_philosopher *philo)
@@ -60,10 +59,11 @@ void	*routine(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
-	printf("Thread %d started\n", philo->id);
-	while (1)
+	while (philo->meals_eaten < philo->table->num_of_meals)
 	{
 		eat(philo);
+		if (philo->meals_eaten >= philo->table->num_of_meals)
+			break ;
 		sleep_and_think(philo);
 	}
 	return (NULL);
