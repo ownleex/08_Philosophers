@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:15:46 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/12 17:38:39 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:09:22 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 void	print_action(t_philosopher *philo, const char *action)
 {
+    if (philo == NULL || action == NULL || philo->table == NULL)
+	{
+        fprintf(stderr, "Error: Null pointers in print_action\n");
+        return;
+    }
 	pthread_mutex_lock(&philo->table->print_mutex);
 	printf("%ld %d %s\n", get_timestamp(philo->table->start_time), \
 	philo->id, action);
@@ -22,6 +27,11 @@ void	print_action(t_philosopher *philo, const char *action)
 
 void eat(t_philosopher *philo)
 {
+    if (philo == NULL || philo->left_fork == NULL || philo->right_fork == NULL)
+	{
+        fprintf(stderr, "Error: Null philosopher or fork pointers\n");
+        return;
+    }
     printf("Philosopher %d trying to take left fork at %p\n", philo->id, (void*)&philo->left_fork->mutex_fork);
     pthread_mutex_lock(&philo->left_fork->mutex_fork);
     print_action(philo, "has taken a fork");
