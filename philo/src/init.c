@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:35:54 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/12 17:29:19 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:36:46 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	init_philosophers(t_table *table)
 		table->num_of_philo];
 		table->philos[i].last_meal_time = table->start_time;
 		table->philos[i].meals_eaten = 0;
+		printf("Philosopher %d assigned left fork %p and right fork %p\n", table->philos[i].id, (void*)&table->philos[i].left_fork->mutex_fork, (void*)&table->philos[i].right_fork->mutex_fork);
 		i++;
 	}
 	return (0);

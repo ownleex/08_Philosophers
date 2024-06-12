@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:15:46 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/11 20:36:30 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:38:39 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,30 @@ void	print_action(t_philosopher *philo, const char *action)
 	pthread_mutex_unlock(&philo->table->print_mutex);
 }
 
-void	eat(t_philosopher *philo)
+void eat(t_philosopher *philo)
 {
-	pthread_mutex_lock(&philo->left_fork->mutex_fork);
-	print_action(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->right_fork->mutex_fork);
-	print_action(philo, "has taken a fork");
-	print_action(philo, "is eating");
-	philo->last_meal_time = get_current_time();
-	usleep(philo->table->time_to_eat * 1000);
-	pthread_mutex_unlock(&philo->right_fork->mutex_fork);
-	pthread_mutex_unlock(&philo->left_fork->mutex_fork);
-	philo->meals_eaten++;
+    printf("Philosopher %d trying to take left fork at %p\n", philo->id, (void*)&philo->left_fork->mutex_fork);
+    pthread_mutex_lock(&philo->left_fork->mutex_fork);
+    print_action(philo, "has taken a fork");
+    printf("Philosopher %d took left fork\n", philo->id);
+
+    printf("Philosopher %d trying to take right fork at %p\n", philo->id, (void*)&philo->right_fork->mutex_fork);
+    pthread_mutex_lock(&philo->right_fork->mutex_fork);
+    print_action(philo, "has taken a fork");
+    printf("Philosopher %d took right fork\n", philo->id);
+
+    print_action(philo, "is eating");
+    philo->last_meal_time = get_current_time();
+    usleep(philo->table->time_to_eat * 1000);
+
+    printf("Philosopher %d releasing right fork\n", philo->id);
+    pthread_mutex_unlock(&philo->right_fork->mutex_fork);
+
+    printf("Philosopher %d releasing left fork\n", philo->id);
+    pthread_mutex_unlock(&philo->left_fork->mutex_fork);
+
+    philo->meals_eaten++;
+    printf("Philosopher %d finished eating\n", philo->id);
 }
 
 void	sleep_and_think(t_philosopher *philo)
