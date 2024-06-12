@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:35:54 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/12 17:54:50 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:21:11 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	init_philosophers(t_table *table)
 {
 	int		i;
 
-	printf("Allocating philosophers\n");
 	table->philos = malloc(sizeof(t_philosopher) * table->num_of_philo);
 	if (!table->philos)
 		return (error("Err: Memory allocation failed.\n"));
@@ -29,7 +28,7 @@ int	init_philosophers(t_table *table)
 		table->num_of_philo];
 		table->philos[i].last_meal_time = table->start_time;
 		table->philos[i].meals_eaten = 0;
-		printf("Philosopher %d assigned left fork %p and right fork %p\n", table->philos[i].id, (void*)&table->philos[i].left_fork->mutex_fork, (void*)&table->philos[i].right_fork->mutex_fork);
+		table->philos[i].table = table;
 		i++;
 	}
 	return (0);
@@ -39,20 +38,14 @@ int	init_forks(t_table *table)
 {
 	int	i;
 
-	printf("Allocating forks\n");
 	table->forks = malloc(sizeof(t_fork) * table->num_of_philo);
 	if (!table->forks)
 		return (error("Err: Memory allocation failed.\n"));
 	i = 0;
 	while (i < table->num_of_philo)
 	{
-		printf("Initializing mutex for fork %d\n", i);
 		if (pthread_mutex_init(&table->forks[i].mutex_fork, NULL))
-		{
-			printf("Mutex initialization failed for fork %d\n", i);
 			return (error("Err: Mutex initialization failed.\n"));
-		}
-		printf("Mutex initialized for fork %d\n", i);
 		i++;
 	}
 	return (0);
@@ -60,7 +53,6 @@ int	init_forks(t_table *table)
 
 int	init_table(t_table *table, int argc, char **argv)
 {
-	printf("Initializing table\n");
 	table->num_of_philo = ft_atol(argv[1]);
 	table->time_to_die = ft_atol(argv[2]);
 	table->time_to_eat = ft_atol(argv[3]);
