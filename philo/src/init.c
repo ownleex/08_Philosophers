@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:35:54 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/12 17:36:46 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:54:50 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ int	init_table(t_table *table, int argc, char **argv)
 	else
 		table->num_of_meals = -1;
 	table->start_time = get_current_time();
-	if (init_forks(table))
-		return (1);
-	if (init_philosophers(table))
-		return (1);
 	if (pthread_mutex_init(&table->print_mutex, NULL))
 		return (error("Err: Print mutex initialization failed.\n"));
 	if (pthread_mutex_init(&table->meal_check_mutex, NULL))
 		return (error("Err: Meal check mutex initialization failed.\n"));
+	if (init_forks(table))
+		return (1);
+	if (init_philosophers(table))
+		return (1);
 	return (0);
 }
