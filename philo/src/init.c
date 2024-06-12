@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:35:54 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/11 20:36:43 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:29:19 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,13 @@ int	init_forks(t_table *table)
 	i = 0;
 	while (i < table->num_of_philo)
 	{
+		printf("Initializing mutex for fork %d\n", i);
 		if (pthread_mutex_init(&table->forks[i].mutex_fork, NULL))
+		{
+			printf("Mutex initialization failed for fork %d\n", i);
 			return (error("Err: Mutex initialization failed.\n"));
+		}
+		printf("Mutex initialized for fork %d\n", i);
 		i++;
 	}
 	return (0);
