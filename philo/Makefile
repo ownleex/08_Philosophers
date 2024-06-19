@@ -6,7 +6,7 @@
 #    By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 13:27:58 by ayarmaya          #+#    #+#              #
-#    Updated: 2024/06/19 19:35:45 by ayarmaya         ###   ########.fr        #
+#    Updated: 2024/06/19 21:19:54 by ayarmaya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC			=	main.c \
 SRCS		=	$(addprefix $(PATH_SRC), $(SRC))
 OBJS		=	$(SRCS:.c=.o)
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror -g
+CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address
 LDFLAGS		=	-lpthread
 HEADERS		=	-I./include
 RM			= 	rm -f
