@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:15:06 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/19 20:45:42 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:21:21 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	ft_strlen(char *str)
 {
 	int	i;
 
-	if (str == NULL)
-		return (0);
 	i = 0;
 	while (str[i] != '\0')
 		i++;
@@ -26,26 +24,20 @@ int	ft_strlen(char *str)
 
 int	ft_atoi(char *str)
 {
-	unsigned long long	nb;
-	int					sign;
-	int					i;
+	long		res;
+	int			sign;
 
-	nb = 0;
+	res = 0;
 	sign = 1;
-	i = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (str[i] == '-')
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-')
 		sign = -1;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		nb = nb * 10 + (str[i] - '0');
-		i++;
-	}
-	return (sign * nb);
+	if (*str == '+' || *str == '-')
+		str++;
+	while (*str >= '0'&& *str <= '9')
+		res = res * 10 + *str++ - '0';
+	return (res * sign);
 }
 
 void	destroy_all(char *str, t_program *program, pthread_mutex_t *forks)
