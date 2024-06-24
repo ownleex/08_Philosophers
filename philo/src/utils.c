@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:15:06 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/20 18:21:21 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:43:32 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_atoi(char *str)
 		sign = -1;
 	if (*str == '+' || *str == '-')
 		str++;
-	while (*str >= '0'&& *str <= '9')
+	while (*str >= '0' && *str <= '9')
 		res = res * 10 + *str++ - '0';
 	return (res * sign);
 }

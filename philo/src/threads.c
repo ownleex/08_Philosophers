@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:01:57 by druina            #+#    #+#             */
-/*   Updated: 2024/06/19 19:14:17 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:44:16 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ int	dead_loop(t_philo *philo)
 {
 	pthread_mutex_lock(philo->dead_lock);
 	if (*philo->dead == 1)
-		return (pthread_mutex_unlock(philo->dead_lock), 1);
+	{
+		pthread_mutex_unlock(philo->dead_lock);
+		return (1);
+	}
 	pthread_mutex_unlock(philo->dead_lock);
 	return (0);
 }

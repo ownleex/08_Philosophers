@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:22:47 by druina            #+#    #+#             */
-/*   Updated: 2024/06/19 19:19:30 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/24 00:59:24 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ void	print_message(char *str, t_philo *philo, int id)
 int	philosopher_dead(t_philo *philo, size_t time_to_die)
 {
 	pthread_mutex_lock(philo->meal_lock);
-	if (get_current_time() - philo->last_meal >= time_to_die
+	if (get_current_time() - philo->last_meal > time_to_die
 		&& philo->eating == 0)
-		return (pthread_mutex_unlock(philo->meal_lock), 1);
+	{
+		pthread_mutex_unlock(philo->meal_lock);
+		return (1);
+	}
 	pthread_mutex_unlock(philo->meal_lock);
 	return (0);
 }

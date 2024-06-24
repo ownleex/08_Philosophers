@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:42:52 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/19 19:34:47 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:29:26 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define PHILO_MAX 200
+# define MAX_PHILO 200
 
 typedef struct s_philo
 {
@@ -59,7 +59,9 @@ int		ft_strlen(char *str);
 
 // main
 int		check_valid_args(char **argv);
-int		check_arg(char *arg);
+int		check_arg(char *str);
+int		ft_malloc(t_philo **philos, pthread_mutex_t **forks, \
+		int philo_num);
 
 // init
 void	init_program(t_program *program, t_philo *philos);
@@ -72,11 +74,6 @@ void	init_input(t_philo *philo, char **argv);
 int		thread_create(t_program *program, pthread_mutex_t *forks);
 void	*philo_routine(void *pointer);
 int		dead_loop(t_philo *philo);
-
-// actions
-void	eat(t_philo *philo);
-void	dream(t_philo *philo);
-void	think(t_philo *philo);
 
 // routines
 void	eat(t_philo *philo);
