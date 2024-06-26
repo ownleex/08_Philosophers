@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:15:01 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/23 16:37:50 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:53:38 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	check_valid_args(char **argv)
 	if (ft_atoi(argv[4]) <= 0 || check_arg(argv[4]) == 1)
 		return (write(2, "Invalid time to sleep\n", 23));
 	if (argv[5] && (ft_atoi(argv[5]) < 0 || check_arg(argv[5]) == 1))
-		return (write(2, "Invalid count of meals per philosopher\n", 51));
+		return (write(2, "Invalid count of meals per philosopher\n", 40));
 	return (0);
 }
 

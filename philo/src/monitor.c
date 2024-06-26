@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:22:47 by druina            #+#    #+#             */
-/*   Updated: 2024/06/24 00:59:24 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:18:41 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_message(char *str, t_philo *philo, int id)
 
 	pthread_mutex_lock(philo->write_lock);
 	time = get_current_time() - philo->start_time;
-	if (!dead_loop(philo))
+	if (!is_dead(philo))
 		printf("%zu %d %s\n", time, id, str);
 	pthread_mutex_unlock(philo->write_lock);
 }

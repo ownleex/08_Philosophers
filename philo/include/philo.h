@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:42:52 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/23 16:29:26 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:25:41 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ void	init_program(t_program *program, t_philo *philos);
 void	init_forks(pthread_mutex_t *forks, int philo_num);
 void	init_philos(t_philo *philos, t_program *program, \
 		pthread_mutex_t *forks, char **argv);
-void	init_input(t_philo *philo, char **argv);
+void	init_args(t_philo *philo, char **argv);
 
 // threads
 int		thread_create(t_program *program, pthread_mutex_t *forks);
 void	*philo_routine(void *pointer);
-int		dead_loop(t_philo *philo);
+int		is_dead(t_philo *philo);
 
 // routines
 void	eat(t_philo *philo);

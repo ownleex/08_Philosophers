@@ -6,13 +6,13 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:01:57 by druina            #+#    #+#             */
-/*   Updated: 2024/06/23 16:44:16 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:41:47 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	dead_loop(t_philo *philo)
+int	is_dead(t_philo *philo)
 {
 	pthread_mutex_lock(philo->dead_lock);
 	if (*philo->dead == 1)
@@ -31,7 +31,7 @@ void	*philo_routine(void *pointer)
 	philo = (t_philo *)pointer;
 	if (philo->id % 2 == 0)
 		ft_usleep(1);
-	while (!dead_loop(philo))
+	while (!is_dead(philo))
 	{
 		eat(philo);
 		dream(philo);
@@ -42,10 +42,10 @@ void	*philo_routine(void *pointer)
 
 int	thread_create(t_program *program, pthread_mutex_t *forks)
 {
-	pthread_t	observer;
+	pthread_t	checker;
 	int			i;
 
-	if (pthread_create(&observer, NULL, &monitor, program->philos) != 0)
+	if (pthread_create(&checker, NULL, &monitor, program->philos) != 0)
 		destroy_all("Thread creation error", program, forks);
 	i = 0;
 	while (i < program->philos[0].num_of_philos)
@@ -56,7 +56,7 @@ int	thread_create(t_program *program, pthread_mutex_t *forks)
 		i++;
 	}
 	i = 0;
-	if (pthread_join(observer, NULL) != 0)
+	if (pthread_join(checker, NULL) != 0)
 		destroy_all("Thread join error", program, forks);
 	while (i < program->philos[0].num_of_philos)
 	{

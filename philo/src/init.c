@@ -6,18 +6,18 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:35:54 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/19 19:03:07 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:54:30 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_input(t_philo *philo, char **argv)
+void	init_args(t_philo *philo, char **argv)
 {
+	philo->num_of_philos = ft_atoi(argv[1]);
 	philo->time_to_die = ft_atoi(argv[2]);
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
-	philo->num_of_philos = ft_atoi(argv[1]);
 	if (argv[5])
 		philo->num_times_to_eat = ft_atoi(argv[5]);
 	else
@@ -35,7 +35,7 @@ void	init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks,
 		philos[i].id = i + 1;
 		philos[i].eating = 0;
 		philos[i].meals_eaten = 0;
-		init_input(&philos[i], argv);
+		init_args(&philos[i], argv);
 		philos[i].start_time = get_current_time();
 		philos[i].last_meal = get_current_time();
 		philos[i].write_lock = &program->write_lock;
