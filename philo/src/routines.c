@@ -15,31 +15,34 @@
 void	think(t_philo *philo)
 {
 	pthread_mutex_lock(philo->dead_lock);
-	if (*philo->dead) {
+	if (*philo->dead)
+	{
 		pthread_mutex_unlock(philo->dead_lock);
-		return;
+		return ;
 	}
 	pthread_mutex_unlock(philo->dead_lock);
 	print_message("is thinking", philo, philo->id);
 }
 
-void dream(t_philo *philo)
+void	dream(t_philo *philo)
 {
-    pthread_mutex_lock(philo->dead_lock);
-    if (*philo->dead) {
-        pthread_mutex_unlock(philo->dead_lock);
-        return;
-    }
-    pthread_mutex_unlock(philo->dead_lock);
-    print_message("is sleeping", philo, philo->id);
-    ft_usleep(philo->time_to_sleep);
+	pthread_mutex_lock(philo->dead_lock);
+	if (*philo->dead)
+	{
+		pthread_mutex_unlock(philo->dead_lock);
+		return ;
+	}
+	pthread_mutex_unlock(philo->dead_lock);
+	print_message("is sleeping", philo, philo->id);
+	ft_usleep(philo->time_to_sleep);
 }
 
 void	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->r_fork);
 	print_message("has taken a fork", philo, philo->id);
-	if (philo->num_of_philos == 1) {
+	if (philo->num_of_philos == 1)
+	{
 		ft_usleep(philo->time_to_die);
 		print_message("died", philo, philo->id);
 		pthread_mutex_lock(philo->dead_lock);
