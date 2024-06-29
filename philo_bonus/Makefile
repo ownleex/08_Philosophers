@@ -1,0 +1,44 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/05 13:27:58 by ayarmaya          #+#    #+#              #
+#    Updated: 2024/06/29 16:34:01 by ayarmaya         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME		=	philo
+PATH_SRC	=	src/
+SRC			=	init_bonus.c \
+				philo_bonus.c \
+				philosopher_bonus.c \
+				utils_bonus.c
+
+SRCS		=	$(addprefix $(PATH_SRC), $(SRC))
+OBJS		=	$(SRCS:.c=.o)
+CC			=	cc
+CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address
+LDFLAGS		=	-lpthread
+HEADERS		=	-I./include
+RM			= 	rm -f
+
+all:		$(NAME)
+
+$(NAME): 	$(OBJS)
+			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(HEADERS) $(LDFLAGS)
+
+%.o: 		%.c
+			$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
+
+clean:
+			$(RM) $(OBJS)
+
+fclean:		clean
+			$(RM) $(NAME)
+
+re:			fclean all
+
+.PHONY:		all clean fclean re
