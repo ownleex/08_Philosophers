@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:39 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 22:38:40 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 22:57:13 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	philosopher_routine(t_philosopher *philo)
 		sem_wait(philo->data->print);
 		printf("%lld %d has taken a fork\n", get_time() - philo->data->start_time, philo->id);
 		sem_post(philo->data->print);
-
 		sem_wait(philo->data->forks);
 		sem_wait(philo->data->print);
 		printf("%lld %d has taken a fork\n", get_time() - philo->data->start_time, philo->id);
@@ -53,15 +52,12 @@ void	philosopher_routine(t_philosopher *philo)
 		philo->last_meal = get_time();
 		sem_post(philo->data->print);
 		ft_usleep(philo->data->time_to_eat);
-		
 		sem_post(philo->data->forks);
 		sem_post(philo->data->forks);
-
 		sem_wait(philo->data->print);
 		printf("%lld %d is sleeping\n", get_time() - philo->data->start_time, philo->id);
 		sem_post(philo->data->print);
 		ft_usleep(philo->data->time_to_sleep);
-
 		sem_wait(philo->data->print);
 		printf("%lld %d is thinking\n", get_time() - philo->data->start_time, philo->id);
 		sem_post(philo->data->print);

@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:37:28 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 22:37:42 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 22:55:53 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,23 @@
 
 typedef struct s_philosopher
 {
-	int			id;
-	pid_t		pid;
-	long long	last_meal;
-	int			meals_eaten;
+	int				id;
+	pid_t			pid;
+	long long		last_meal;
+	int				meals_eaten;
 	struct s_data	*data;
 }	t_philosopher;
 
 typedef struct s_data
 {
-	int			num_philosophers;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			num_meals;
-	sem_t		*forks;
-	sem_t		*print;
-	long long	start_time;
+	int				num_philosophers;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_meals;
+	sem_t			*forks;
+	sem_t			*print;
+	long long		start_time;
 	t_philosopher	*philosophers;
 }	t_data;
 
