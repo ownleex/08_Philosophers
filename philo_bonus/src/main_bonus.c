@@ -6,13 +6,13 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:21 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 23:32:30 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:33:48 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	clean_up(t_data *data)
+void	clean_up(t_data *data)
 {
 	if (data->forks != SEM_FAILED)
 		sem_close(data->forks);

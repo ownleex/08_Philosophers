@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:37:28 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 23:02:16 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:34:04 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void		start_simulation(t_data *data);
 void		philosopher_routine(t_philosopher *philo);
 int			check_valid_args(char **argv);
 int			ft_atoi(char *str);
+void		clean_up(t_data *data);
 
 #endif
