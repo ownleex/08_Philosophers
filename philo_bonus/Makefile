@@ -6,15 +6,14 @@
 #    By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 13:27:58 by ayarmaya          #+#    #+#              #
-#    Updated: 2024/06/29 16:34:01 by ayarmaya         ###   ########.fr        #
+#    Updated: 2024/06/30 22:15:18 by ayarmaya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	philo
+NAME		=	philo_bonus
 PATH_SRC	=	src/
-SRC			=	init_bonus.c \
-				philo_bonus.c \
-				philosopher_bonus.c \
+SRC			=	main_bonus.c \
+				monitor_bonus.c \
 				utils_bonus.c
 
 SRCS		=	$(addprefix $(PATH_SRC), $(SRC))
