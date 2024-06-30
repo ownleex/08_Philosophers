@@ -6,29 +6,33 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:52 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 01:12:51 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 01:15:52 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void clean_up(t_data *data)
+void	clean_up(t_data *data)
 {
-	if (data->forks != SEM_FAILED) {
+	int	i;
+
+	i = -1;
+	while (++i < data->num_philosophers)
+	{
+		kill(data->philosophers[i].pid, SIGKILL);
+		waitpid(data->philosophers[i].pid, NULL, 0);
+	}
+	if (data->forks != SEM_FAILED)
 		sem_close(data->forks);
-		sem_unlink("/forks");
-	}
-	if (data->print != SEM_FAILED) {
+	if (data->print != SEM_FAILED)
 		sem_close(data->print);
-		sem_unlink("/print");
-	}
-	if (data->sem_alive != SEM_FAILED) {
+	if (data->sem_alive != SEM_FAILED)
 		sem_close(data->sem_alive);
-		sem_unlink("/alive");
-	}
-	if (data->philosophers) {
+	sem_unlink("/forks");
+	sem_unlink("/print");
+	sem_unlink("/alive");
+	if (data->philosophers)
 		free(data->philosophers);
-	}
 }
 
 int	ft_atoi(char *str)
