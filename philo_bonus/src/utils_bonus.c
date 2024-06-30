@@ -6,11 +6,26 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:52 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 23:02:06 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:01:25 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	clean_up(t_data *data)
+{
+	if (data->forks != SEM_FAILED)
+		sem_close(data->forks);
+	if (data->print != SEM_FAILED)
+		sem_close(data->print);
+	if (data->sem_alive != SEM_FAILED)
+		sem_close(data->sem_alive);
+	sem_unlink("/forks");
+	sem_unlink("/print");
+	sem_unlink("/alive");
+	if (data->philosophers)
+		free(data->philosophers);
+}
 
 int	ft_atoi(char *str)
 {
