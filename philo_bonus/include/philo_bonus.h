@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:37:28 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 23:34:04 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:40:49 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_data
 	int				num_meals;
 	sem_t			*forks;
 	sem_t			*print;
+	sem_t			*sem_alive;
 	long long		start_time;
 	t_philosopher	*philosophers;
 }	t_data;

@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:39 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 23:31:28 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:41:40 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	*monitor(void *arg)
 		time = get_time();
 		if (time - philo->last_meal > philo->data->time_to_die)
 		{
+			sem_wait(philo->data->sem_alive);  // Empêche la routine de manger si mort
 			sem_wait(philo->data->print);
 			printf("%lld %d died\n", time - philo->data->start_time, philo->id);
 			exit(1);
@@ -48,10 +49,12 @@ void	philosopher_routine(t_philosopher *philo)
 		sem_wait(philo->data->forks);
 		sem_wait(philo->data->print);
 		printf("%lld %d has taken a fork\n", get_time() - philo->data->start_time, philo->id);
+		sem_wait(philo->data->sem_alive);  // Vérification de la vie avant de manger
 		printf("%lld %d is eating\n", get_time() - philo->data->start_time, philo->id);
 		philo->last_meal = get_time();
 		sem_post(philo->data->print);
 		ft_usleep(philo->data->time_to_eat);
+		sem_post(philo->data->sem_alive);  // Libérer après avoir fini de manger
 		sem_post(philo->data->forks);
 		sem_post(philo->data->forks);
 		sem_wait(philo->data->print);
