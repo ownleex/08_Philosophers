@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:52 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 00:34:45 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:39:31 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void clean_up(t_data *data)
     while (++i < data->num_philosophers)
     {
         kill(data->philosophers[i].pid, SIGKILL);
+		waitpid(data->philosophers[i].pid, NULL, 0);
     }
 
     if (data->forks != SEM_FAILED)

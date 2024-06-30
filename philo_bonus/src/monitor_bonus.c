@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:39 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 00:38:24 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:38:51 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ void start_simulation(t_data *data)
         if (data->philosophers[i].pid == 0)
         {
             philosopher_routine(&data->philosophers[i]);
-            exit(0);  // S'assurer que le processus enfant se termine correctement
+            exit(0);
         }
     }
 }
-
