@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:21 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 00:01:28 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:16:56 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ static void	init_data(t_data *data, int argc, char **argv)
 	data->forks = sem_open("/forks", O_CREAT, 0644, data->num_philosophers);
 	data->print = sem_open("/print", O_CREAT, 0644, 1);
 	data->sem_alive = sem_open("/alive", O_CREAT, 0644, 1);
-	if (data->forks == SEM_FAILED || data->print == SEM_FAILED || \
-	data->sem_alive == SEM_FAILED)
+	if (data->forks == SEM_FAILED || data->print == SEM_FAILED || data->sem_alive == SEM_FAILED)
 	{
 		if (data->forks != SEM_FAILED)
 			sem_close(data->forks);
@@ -56,8 +55,7 @@ int	check_arg(char *str)
 
 int	check_valid_args(char **argv)
 {
-	if (ft_atoi(argv[1]) > MAX_PHILO || ft_atoi(argv[1]) <= 0 \
-	|| check_arg(argv[1]) == 1)
+	if (ft_atoi(argv[1]) > MAX_PHILO || ft_atoi(argv[1]) <= 0 || check_arg(argv[1]) == 1)
 		return (write(2, "Invalid philosophers number\n", 29));
 	if (ft_atoi(argv[2]) <= 0 || check_arg(argv[2]) == 1)
 		return (write(2, "Invalid time to die\n", 21));

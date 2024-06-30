@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:39 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 00:03:54 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:17:12 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,13 @@ void	philosopher_routine(t_philosopher *philo)
 	{
 		sem_wait(philo->data->forks);
 		sem_wait(philo->data->print);
-		printf("%lld %d has taken a fork\n", get_time() - \
-		philo->data->start_time, philo->id);
+		printf("%lld %d has taken a fork\n", get_time() - philo->data->start_time, philo->id);
 		sem_post(philo->data->print);
 		sem_wait(philo->data->forks);
 		sem_wait(philo->data->print);
-		printf("%lld %d has taken a fork\n", get_time() - \
-		philo->data->start_time, philo->id);
+		printf("%lld %d has taken a fork\n", get_time() - philo->data->start_time, philo->id);
 		sem_wait(philo->data->sem_alive);
-		printf("%lld %d is eating\n", get_time() - \
-		philo->data->start_time, philo->id);
+		printf("%lld %d is eating\n", get_time() - philo->data->start_time, philo->id);
 		philo->last_meal = get_time();
 		sem_post(philo->data->print);
 		ft_usleep(philo->data->time_to_eat);
@@ -61,13 +58,11 @@ void	philosopher_routine(t_philosopher *philo)
 		sem_post(philo->data->forks);
 		sem_post(philo->data->forks);
 		sem_wait(philo->data->print);
-		printf("%lld %d is sleeping\n", get_time() - \
-		philo->data->start_time, philo->id);
+		printf("%lld %d is sleeping\n", get_time() - philo->data->start_time, philo->id);
 		sem_post(philo->data->print);
 		ft_usleep(philo->data->time_to_sleep);
 		sem_wait(philo->data->print);
-		printf("%lld %d is thinking\n", get_time() - \
-		philo->data->start_time, philo->id);
+		printf("%lld %d is thinking\n", get_time() - philo->data->start_time, philo->id);
 		sem_post(philo->data->print);
 	}
 	clean_up(philo->data);
