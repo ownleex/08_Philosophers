@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:21 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 23:14:50 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:20:23 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,3 @@ int	main(int argc, char **argv)
 	clean_up(&data);
 	return (0);
 }
-
