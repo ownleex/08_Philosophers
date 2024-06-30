@@ -6,20 +6,29 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:21 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 23:01:22 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:14:50 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+static void	clean_up(t_data *data)
+{
+	sem_close(data->forks);
+	sem_close(data->print);
+	sem_unlink("/forks");
+	sem_unlink("/print");
+	free(data->philosophers);
+}
+
 static void	init_data(t_data *data, int argc, char **argv)
 {
-	data->num_philosophers = atoi(argv[1]);
-	data->time_to_die = atoi(argv[2]);
-	data->time_to_eat = atoi(argv[3]);
-	data->time_to_sleep = atoi(argv[4]);
+	data->num_philosophers = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		data->num_meals = atoi(argv[5]);
+		data->num_meals = ft_atoi(argv[5]);
 	else
 		data->num_meals = -1;
 	data->start_time = get_time();
@@ -82,8 +91,7 @@ int	main(int argc, char **argv)
 			break ;
 		}
 	}
-	sem_close(data.forks);
-	sem_close(data.print);
-	free(data.philosophers);
+	clean_up(&data);
 	return (0);
 }
+

@@ -59,4 +59,5 @@ all
 
 test.c
 philo/philo
+philo_bonus/philo_bonus
 philo.zip
