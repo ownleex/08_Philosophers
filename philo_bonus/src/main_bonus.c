@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:21 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 00:20:27 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:30:37 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,30 +68,30 @@ int	check_valid_args(char **argv)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_data	data;
-	int		i;
-	int		status;
+    t_data data;
+    int i;
+    int status;
 
-	if (argc != 5 && argc != 6)
-		return (write(2, "Wrong argument count\n", 22), 1);
-	if (check_valid_args(argv) > 0)
-		return (1);
-	init_data(&data, argc, argv);
-	start_simulation(&data);
-	i = -1;
-	while (++i < data.num_philosophers)
-	{
-		waitpid(-1, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
-		{
-			i = -1;
-			while (++i < data.num_philosophers)
-				kill(data.philosophers[i].pid, SIGKILL);
-			break ;
-		}
-	}
-	clean_up(&data);
-	return (0);
+    if (argc != 5 && argc != 6)
+        return (write(2, "Wrong argument count\n", 22), 1);
+    if (check_valid_args(argv) > 0)
+        return (1);
+    init_data(&data, argc, argv);
+    start_simulation(&data);
+    i = -1;
+    while (++i < data.num_philosophers)
+    {
+        waitpid(-1, &status, 0);
+        if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
+        {
+            i = -1;
+            while (++i < data.num_philosophers)
+                kill(data.philosophers[i].pid, SIGKILL);
+            break;
+        }
+    }
+    clean_up(&data);
+    return (0);
 }
