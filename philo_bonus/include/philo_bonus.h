@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:37:28 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 22:55:53 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:02:16 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <signal.h>
+
+# define MAX_PHILO 200
 
 typedef struct s_philosopher
 {
@@ -49,5 +51,7 @@ long long	get_time(void);
 void		ft_usleep(int time_in_ms);
 void		start_simulation(t_data *data);
 void		philosopher_routine(t_philosopher *philo);
+int			check_valid_args(char **argv);
+int			ft_atoi(char *str);
 
 #endif
