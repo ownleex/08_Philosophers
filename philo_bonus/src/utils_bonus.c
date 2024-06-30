@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:52 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 00:30:16 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:34:45 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 void clean_up(t_data *data)
 {
+    int i;
+
+    i = -1;
+    while (++i < data->num_philosophers)
+    {
+        kill(data->philosophers[i].pid, SIGKILL);
+    }
+
     if (data->forks != SEM_FAILED)
         sem_close(data->forks);
     if (data->print != SEM_FAILED)
@@ -26,6 +34,7 @@ void clean_up(t_data *data)
     if (data->philosophers)
         free(data->philosophers);
 }
+
 
 int	ft_atoi(char *str)
 {
