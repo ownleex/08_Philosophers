@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:39 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 22:57:13 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:31:28 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	philosopher_routine(t_philosopher *philo)
 		printf("%lld %d is thinking\n", get_time() - philo->data->start_time, philo->id);
 		sem_post(philo->data->print);
 	}
+    clean_up(philo->data);
 }
 
 void	start_simulation(t_data *data)

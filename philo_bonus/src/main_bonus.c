@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:21 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 23:20:23 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 23:32:30 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 static void	clean_up(t_data *data)
 {
-	sem_close(data->forks);
-	sem_close(data->print);
+	if (data->forks != SEM_FAILED)
+		sem_close(data->forks);
+	if (data->print != SEM_FAILED)
+		sem_close(data->print);
 	sem_unlink("/forks");
 	sem_unlink("/print");
-	free(data->philosophers);
+	if (data->philosophers)
+		free(data->philosophers);
 }
 
 static void	init_data(t_data *data, int argc, char **argv)
@@ -38,10 +41,18 @@ static void	init_data(t_data *data, int argc, char **argv)
 	data->forks = sem_open("/forks", O_CREAT, 0644, data->num_philosophers);
 	data->print = sem_open("/print", O_CREAT, 0644, 1);
 	if (data->forks == SEM_FAILED || data->print == SEM_FAILED)
+	{
+		if (data->forks != SEM_FAILED)
+			sem_close(data->forks);
+		if (data->print != SEM_FAILED)
+			sem_close(data->print);
+		free(data->philosophers);
 		exit(1);
+	}
 	sem_unlink("/forks");
 	sem_unlink("/print");
 }
+
 
 int	check_arg(char *str)
 {
