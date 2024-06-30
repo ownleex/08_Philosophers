@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:21 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/06/30 22:38:22 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/06/30 22:53:26 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int	main(int argc, char **argv)
 	int		status;
 
 	if (argc != 5 && argc != 6)
-	{
-		printf("Usage: ./philo_bonus num_philosophers time_to_die time_to_eat time_to_sleep [num_meals]\n");
-		return (1);
-	}
+		return (write(2, "Wrong argument count\n", 22), 1);
 	init_data(&data, argc, argv);
 	start_simulation(&data);
 	i = -1;
