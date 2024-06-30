@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:39 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 00:17:12 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 00:20:48 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	philosopher_routine(t_philosopher *philo)
 
 	if (pthread_create(&tid, NULL, &monitor, philo) != 0)
 		exit(1);
-	pthread_detach(tid);
+	pthread_join(tid, NULL); // Utiliser pthread_join au lieu de pthread_detach
 	while (1)
 	{
 		sem_wait(philo->data->forks);
