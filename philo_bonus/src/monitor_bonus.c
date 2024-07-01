@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:39 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 02:34:32 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 02:36:01 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	philosopher_routine(t_philosopher *philo)
 	if (pthread_create(&tid, NULL, &monitor, philo) != 0)
 		exit(1);
 	pthread_detach(tid);
-	pthread_join(tid, NULL);
 	while (1)
 	{
 		take_forks_and_eat(philo);
