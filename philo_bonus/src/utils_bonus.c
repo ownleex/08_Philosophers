@@ -6,11 +6,21 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:52 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 01:15:52 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 01:48:01 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	print_status(t_philosopher *philo, const char *status)
+{
+	long long	time;
+
+	time = get_time() - philo->data->start_time;
+	sem_wait(philo->data->print);
+	printf("%lld %d %s\n", time, philo->id, status);
+	sem_post(philo->data->print);
+}
 
 void	clean_up(t_data *data)
 {

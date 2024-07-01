@@ -6,11 +6,33 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:39 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 01:17:25 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 01:47:34 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	take_forks_and_eat(t_philosopher *philo)
+{
+	sem_wait(philo->data->forks);
+	print_status(philo, "has taken a fork");
+	sem_wait(philo->data->forks);
+	print_status(philo, "has taken a fork");
+	sem_wait(philo->data->sem_alive);
+	print_status(philo, "is eating");
+	philo->last_meal = get_time();
+	ft_usleep(philo->data->time_to_eat);
+	sem_post(philo->data->sem_alive);
+	sem_post(philo->data->forks);
+	sem_post(philo->data->forks);
+}
+
+void	sleep_and_think(t_philosopher *philo)
+{
+	print_status(philo, "is sleeping");
+	ft_usleep(philo->data->time_to_sleep);
+	print_status(philo, "is thinking");
+}
 
 void	*monitor(void *arg)
 {
@@ -38,41 +60,13 @@ void	philosopher_routine(t_philosopher *philo)
 	pthread_t	tid;
 
 	if (pthread_create(&tid, NULL, &monitor, philo) != 0)
-	{
-		perror("pthread_create");
 		exit(1);
-	}
-	if (pthread_detach(tid) != 0)
-	{
-		perror("pthread_detach");
-		exit(1);
-	}
+	pthread_detach(tid);
 	while (1)
 	{
-		sem_wait(philo->data->forks);
-		sem_wait(philo->data->print);
-		printf("%lld %d has taken a fork\n", get_time() - philo->data->start_time, philo->id);
-		sem_post(philo->data->print);
-		sem_wait(philo->data->forks);
-		sem_wait(philo->data->print);
-		printf("%lld %d has taken a fork\n", get_time() - philo->data->start_time, philo->id);
-		sem_wait(philo->data->sem_alive);
-		printf("%lld %d is eating\n", get_time() - philo->data->start_time, philo->id);
-		philo->last_meal = get_time();
-		sem_post(philo->data->print);
-		ft_usleep(philo->data->time_to_eat);
-		sem_post(philo->data->sem_alive);
-		sem_post(philo->data->forks);
-		sem_post(philo->data->forks);
-		sem_wait(philo->data->print);
-		printf("%lld %d is sleeping\n", get_time() - philo->data->start_time, philo->id);
-		sem_post(philo->data->print);
-		ft_usleep(philo->data->time_to_sleep);
-		sem_wait(philo->data->print);
-		printf("%lld %d is thinking\n", get_time() - philo->data->start_time, philo->id);
-		sem_post(philo->data->print);
+		take_forks_and_eat(philo);
+		sleep_and_think(philo);
 	}
-	clean_up(philo->data);
 }
 
 void	start_simulation(t_data *data)

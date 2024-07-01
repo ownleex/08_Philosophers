@@ -6,7 +6,7 @@
 #    By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/30 22:37:59 by ayarmaya          #+#    #+#              #
-#    Updated: 2024/06/30 22:38:00 by ayarmaya         ###   ########.fr        #
+#    Updated: 2024/07/01 02:13:06 by ayarmaya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME		=	philo_bonus
 PATH_SRC	=	src/
 SRC			=	main_bonus.c \
 				monitor_bonus.c \
+				check_args_bonus.c \
 				utils_bonus.c
 
 SRCS		=	$(addprefix $(PATH_SRC), $(SRC))

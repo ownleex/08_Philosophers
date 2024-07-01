@@ -6,32 +6,19 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:21 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 01:15:39 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 02:15:15 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static void	init_data(t_data *data, int argc, char **argv)
+static void	init_semaphores(t_data *data)
 {
-	data->num_philosophers = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->num_meals = ft_atoi(argv[5]);
-	else
-		data->num_meals = -1;
-	data->start_time = get_time();
-	data->philosophers = malloc(sizeof(t_philosopher) * data->num_philosophers);
-	if (!data->philosophers)
-		exit(1);
-
 	data->forks = sem_open("/forks", O_CREAT, 0644, data->num_philosophers);
 	data->print = sem_open("/print", O_CREAT, 0644, 1);
 	data->sem_alive = sem_open("/alive", O_CREAT, 0644, 1);
-
-	if (data->forks == SEM_FAILED || data->print == SEM_FAILED || data->sem_alive == SEM_FAILED)
+	if (data->forks == SEM_FAILED || data->print == SEM_FAILED || \
+	data->sem_alive == SEM_FAILED)
 	{
 		if (data->forks != SEM_FAILED)
 			sem_close(data->forks);
@@ -47,35 +34,49 @@ static void	init_data(t_data *data, int argc, char **argv)
 	sem_unlink("/alive");
 }
 
-int	check_arg(char *str)
+static void	init_data(t_data *data, int argc, char **argv)
 {
-	while (*str)
-		if (*str < '0' || *str++ > '9')
-			return (1);
-	return (0);
+	data->num_philosophers = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data->num_meals = ft_atoi(argv[5]);
+	else
+		data->num_meals = -1;
+	data->start_time = get_time();
+	data->philosophers = malloc(sizeof(t_philosopher) * data->num_philosophers);
+	if
+		(!data->philosophers) exit(1);
+	init_semaphores(data);
 }
 
-int	check_valid_args(char **argv)
+static void	monitor_philosophers(t_data *data)
 {
-	if (ft_atoi(argv[1]) > MAX_PHILO || ft_atoi(argv[1]) <= 0 || \
-	check_arg(argv[1]) == 1)
-		return (write(2, "Invalid philosophers number\n", 29));
-	if (ft_atoi(argv[2]) <= 0 || check_arg(argv[2]) == 1)
-		return (write(2, "Invalid time to die\n", 21));
-	if (ft_atoi(argv[3]) <= 0 || check_arg(argv[3]) == 1)
-		return (write(2, "Invalid time to eat\n", 21));
-	if (ft_atoi(argv[4]) <= 0 || check_arg(argv[4]) == 1)
-		return (write(2, "Invalid time to sleep\n", 23));
-	if (argv[5] && (ft_atoi(argv[5]) < 0 || check_arg(argv[5]) == 1))
-		return (write(2, "Invalid count of meals per philosopher\n", 40));
-	return (0);
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < data->num_philosophers)
+	{
+		waitpid(-1, &status, 0);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
+		{
+			i = 0;
+			while (i < data->num_philosophers)
+			{
+				kill(data->philosophers[i].pid, SIGKILL);
+				i++;
+			}
+			break ;
+		}
+		i++;
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	int		i;
-	int		status;
 
 	if (argc != 5 && argc != 6)
 		return (write(2, "Wrong argument count\n", 22), 1);
@@ -83,18 +84,7 @@ int	main(int argc, char **argv)
 		return (1);
 	init_data(&data, argc, argv);
 	start_simulation(&data);
-	i = -1;
-	while (++i < data.num_philosophers)
-	{
-		waitpid(-1, &status, 0);
-		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
-		{
-			i = -1;
-			while (++i < data.num_philosophers)
-				kill(data.philosophers[i].pid, SIGKILL);
-			break ;
-		}
-	}
+	monitor_philosophers(&data);
 	clean_up(&data);
 	return (0);
 }
