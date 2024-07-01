@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:33:05 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 00:04:21 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:35:50 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,19 @@ int		ft_atoi(char *str);
 int		ft_strlen(char *str);
 
 // main
-int		check_valid_args(char **argv);
-int		check_arg(char *str);
 int		ft_malloc(t_philo **philos, pthread_mutex_t **forks, \
 		int philo_num);
+
+// check_args
+int		check_valid_args(char **argv);
+int		check_arg(char *str);
 
 // init
 void	init_program(t_program *program, t_philo *philos);
 void	init_forks(pthread_mutex_t *forks, int philo_num);
+void	init_args(t_philo *philo, char **argv);
 void	init_philos(t_philo *philos, t_program *program, \
 		pthread_mutex_t *forks, char **argv);
-void	init_args(t_philo *philo, char **argv);
 
 // threads
 int		thread_create(t_program *program, pthread_mutex_t *forks);

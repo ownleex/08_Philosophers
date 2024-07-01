@@ -6,13 +6,14 @@
 #    By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/30 22:33:50 by ayarmaya          #+#    #+#              #
-#    Updated: 2024/07/01 00:05:06 by ayarmaya         ###   ########.fr        #
+#    Updated: 2024/07/01 19:35:55 by ayarmaya         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	philo
 PATH_SRC	=	src/
 SRC			=	main.c \
+				check_args.c \
 				utils.c \
 				init.c \
 				threads.c \
