@@ -6,7 +6,7 @@
 /*   By: ayarmaya <ayarmaya@student.42nice.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 22:38:21 by ayarmaya          #+#    #+#             */
-/*   Updated: 2024/07/01 14:48:38 by ayarmaya         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:54:04 by ayarmaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,9 @@ static void	init_semaphores(t_data *data)
 	if (data->forks == SEM_FAILED || data->print == SEM_FAILED || \
 	data->sem_alive == SEM_FAILED)
 	{
-		if (data->forks != SEM_FAILED)
-			sem_close(data->forks);
-		if (data->print != SEM_FAILED)
-			sem_close(data->print);
-		if (data->sem_alive != SEM_FAILED)
-			sem_close(data->sem_alive);
-		free(data->philosophers);
 		clean_up(data);
 		exit(1);
 	}
-	sem_unlink("/forks");
-	sem_unlink("/print");
-	sem_unlink("/alive");
 }
 
 static void	init_data(t_data *data, int argc, char **argv)
